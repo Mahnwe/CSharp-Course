@@ -17,6 +17,7 @@ namespace CSharp_Course.Game
 
         public Result StartFight(int playerDice, int enemyDice)
         {
+            Console.WriteLine("Fighters prepare to attack !");
             Console.WriteLine("Your damage : " + playerDice + " Enemy damage : " + enemyDice);
             if (WinFight(playerDice, enemyDice))
             {
