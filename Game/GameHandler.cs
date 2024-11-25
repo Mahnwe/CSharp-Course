@@ -19,6 +19,10 @@ namespace CSharp_Course.Game
         {
             Console.WriteLine("Fighters prepare to attack !");
             Console.WriteLine("Your damage : " + playerDice + " Enemy damage : " + enemyDice);
+            if (playerDice == enemyDice)
+            {
+                return Result.Tie;
+            }
             if (WinFight(playerDice, enemyDice))
             {
                 var winGap = playerDice - enemyDice;
@@ -35,7 +39,7 @@ namespace CSharp_Course.Game
 
         public bool WinFight(int dice1, int dice2)
         {
-            return dice1 >= dice2;
+            return dice1 > dice2;
         }
     }
 }

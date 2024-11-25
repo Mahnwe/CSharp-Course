@@ -24,6 +24,9 @@ namespace CSharp_Course.Game
                     case Result.Lose:
                         Console.WriteLine("You lose !");
                         break;
+                    case Result.Tie:
+                        Console.WriteLine("That's a tie ! Let's fight again !");
+                        break;
                 }
                 Console.WriteLine("Next Fight ! LifePoints : " + gameHandler.Player.LifePoints + "  Score : " + gameHandler.Player.Score);
             }

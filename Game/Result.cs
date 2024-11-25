@@ -9,6 +9,7 @@ namespace CSharp_Course.Game
     public enum Result
     {
             Win,
-            Lose
+            Lose,
+            Tie
     }
 }
