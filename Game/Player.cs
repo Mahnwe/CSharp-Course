@@ -10,10 +10,12 @@ namespace CSharp_Course.Game
     {
         public int LifePoints {  get; private set; }
         public int Score { get; private set; }
+        public List<Loot> LootList { get; private set; }
 
         public Player(int initLifePoints)
         {
             LifePoints = initLifePoints;
+            LootList = new List<Loot>();
         }
 
         public void WinFight(int winGap)

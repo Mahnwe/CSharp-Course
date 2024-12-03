@@ -9,10 +9,12 @@ namespace CSharp_Course.Game
     public class GameHandler
     {
         public Player Player { get; }
+        public LootManager LootManager { get; }
 
         public GameHandler()
         {
             Player = new Player(15);
+            LootManager = new LootManager();
         }
 
         public Result StartFight(int playerDice, int enemyDice)
@@ -27,6 +29,11 @@ namespace CSharp_Course.Game
             {
                 var winGap = playerDice - enemyDice;
                 Player.WinFight(winGap);
+                Player.LootList.Add(LootManager.LaunchRandomLoot());
+                for (int i = 0; i < Player.LootList.Count; i++)
+                {
+                    Console.WriteLine(Player.LootList[i].Name);
+                }
                 return Result.Win;
             }
             else
