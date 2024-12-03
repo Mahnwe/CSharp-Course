@@ -1,5 +1,6 @@
 using CSharp_Course.Game;
 using Xunit;
+using FluentAssertions;
 
 namespace CSharp_Course.GameTests
 {
@@ -18,12 +19,9 @@ namespace CSharp_Course.GameTests
 
             // Assert
             // Check that player win, score increase by 5 and player's life points stay at 15
-            if (result != Result.Win)
-                Assert.Fail();
-            if (gameHandler.Player.Score != 5)
-                Assert.Fail();
-            if (gameHandler.Player.LifePoints != 15)
-                Assert.Fail();
+            result.Should().Be(Result.Win);
+            gameHandler.Player.Score.Should().Be(5);
+            gameHandler.Player.LifePoints.Should().Be(15);
         }
 
         [Fact]
@@ -39,12 +37,9 @@ namespace CSharp_Course.GameTests
 
             // Assert
             // Check that result is tie, score stay at 0 and player's life points stay at 15
-            if (result != Result.Tie)
-                Assert.Fail();
-            if (gameHandler.Player.Score != 0)
-                Assert.Fail();
-            if (gameHandler.Player.LifePoints != 15)
-                Assert.Fail();
+            result.Should().Be(Result.Tie);
+            gameHandler.Player.Score.Should().Be(0);
+            gameHandler.Player.LifePoints.Should().Be(15);
         }
 
         [Fact]
@@ -60,12 +55,9 @@ namespace CSharp_Course.GameTests
 
             // Assert
             // Check that result is lose, score stay at 0 and player's life points decrease by 2
-            if (result != Result.Lose)
-                Assert.Fail();
-            if (gameHandler.Player.Score != 0)
-                Assert.Fail();
-            if (gameHandler.Player.LifePoints != 13)
-                Assert.Fail();
+            result.Should().Be(Result.Lose);
+            gameHandler.Player.Score.Should().Be(0);
+            gameHandler.Player.LifePoints.Should().Be(13);
         }
     }
 }
