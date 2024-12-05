@@ -22,25 +22,32 @@ namespace CSharp_Course.Game
         {
             ManagerLootList.Add(new Loot("Life potion", 0, 2));
             ManagerLootList.Add(new Loot("Trick dice", 1, 0));
-            ManagerLootList.Add(new Loot("Old paper", 0, 0));
         }
-        public Loot LaunchRandomLoot()
+        public void LaunchRandomLoot(List<Loot> playerList)
         {
-            var LootResult = random.Next(1, 10);
+            var LootResult = random.Next(1, 11);
+            Console.WriteLine(LootResult);
             switch(LootResult)
             {
                 case 6:
-                    Console.WriteLine("You have looted a life potion ! Your life points increase by 2");
-                    return ManagerLootList[0];
+                    Console.WriteLine("You have looted a life potion !");
+                    playerList.Add(ManagerLootList[0]);
+                    break;
                 case 7:
-                    Console.WriteLine("You have looted a life potion ! Your life points increase by 2");
-                    return ManagerLootList[0];
+                    Console.WriteLine("You have looted a life potion !");
+                    playerList.Add(ManagerLootList[0]);
+                    break;
+                case 9:
+                    Console.WriteLine("You have looted a trick dice !");
+                    playerList.Add(ManagerLootList[1]);
+                    break;
                 case 10:
-                    Console.WriteLine("You have looted a trick dice ! Your dice score increase by 1");
-                    return ManagerLootList[1];
+                    Console.WriteLine("You have looted a trick dice !");
+                    playerList.Add(ManagerLootList[1]);
+                    break;
                 default:
-                    Console.WriteLine("You have looted an useless old paper");
-                    return ManagerLootList[2];
+                    Console.WriteLine("You haven't looted anything");
+                    break;
             }
         }
     }

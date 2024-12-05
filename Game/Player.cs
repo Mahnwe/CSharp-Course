@@ -27,5 +27,10 @@ namespace CSharp_Course.Game
         {
             LifePoints -= loseGap;
         }
+
+        public void DrinkLifePotion(int lifeHeal)
+        {
+            LifePoints += lifeHeal;
+        }
     }
 }
