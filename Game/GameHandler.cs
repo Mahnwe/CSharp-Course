@@ -18,14 +18,35 @@ namespace CSharp_Course.Game
             LootManager = new LootManager();
         }
 
-        public Result StartFight(int playerDice, int enemyDice)
+        public void HandleGame()
+        {
+            var dice = new Dice();
+            var result = HandleFight(dice.RollDice(), dice.RollDice());
+            switch (result)
+            {
+                case Result.Win:
+                    Console.WriteLine("You win !");
+                    LootManager.LaunchRandomLoot(Player.LootList);
+                    LootManager.CheckPlayerLootLife(Player);
+                    break;
+                case Result.Lose:
+                    Console.WriteLine("You lose !");
+                    break;
+                case Result.Tie:
+                    Console.WriteLine("That's a tie ! Let's fight again !");
+                    break;
+            }
+
+            Console.WriteLine("Next Fight ! LifePoints : " + Player.LifePoints + "  Score : " + Player.Score);
+        }
+
+        public Result HandleFight(int playerDice, int enemyDice)
         {
             Console.WriteLine("Fighters prepare to attack !");
             Console.WriteLine("Checking your inventory for bonus !");
-            Console.WriteLine(playerDice);
             if (playerDice != 6)
             { 
-                 playerDice = CheckPlayerLootDice(playerDice); 
+                 playerDice = LootManager.CheckPlayerLootDice(playerDice, Player); 
             }
             
             Console.WriteLine("Your damage : " + playerDice + " Enemy damage : " + enemyDice);
@@ -37,8 +58,6 @@ namespace CSharp_Course.Game
             {
                 var winGap = playerDice - enemyDice;
                 Player.WinFight(winGap);
-                LootManager.LaunchRandomLoot(Player.LootList);
-                CheckPlayerLootLife();
                 return Result.Win;
             }
             else
@@ -54,31 +73,25 @@ namespace CSharp_Course.Game
             return dice1 > dice2;
         }
 
+        public Result HandleTestGame(int playerDice, int enemyDice)
+        {
+            var result = HandleFight(playerDice, enemyDice);
+            switch (result)
+            {
+                case Result.Win:
+                    Console.WriteLine("You win !");
+                    LootManager.LaunchRandomLoot(Player.LootList);
+                    LootManager.CheckPlayerLootLife(Player);
+                    break;
+                case Result.Lose:
+                    Console.WriteLine("You lose !");
+                    break;
+                case Result.Tie:
+                    Console.WriteLine("That's a tie ! Let's fight again !");
+                    break;
+            }
 
-        public void CheckPlayerLootLife()
-        {
-            for (int i = 0; i < Player.LootList.Count; i++)
-            {
-                if (Player.LootList[i].Name == "Life potion")
-                {
-                    Console.WriteLine("You drank a life potion ! Your life points increased by 2");
-                    Player.DrinkLifePotion(Player.LootList[i].LifeBonus);
-                    Player.LootList.RemoveAt(i);
-                }
-            }
-        }
-        public int CheckPlayerLootDice(int playerDice)
-        {
-            for (int i = 0; i < Player.LootList.Count; i++)
-            {
-                if (Player.LootList[i].Name == "Trick dice")
-                {
-                    Console.WriteLine("You used a trick dice ! Your dice's score increased by 1");
-                    playerDice += Player.LootList[i].DiceBonus;
-                    Player.LootList.RemoveAt(i);
-                }
-            }
-            return playerDice;
+            return result;
         }
     }
 }
