@@ -10,7 +10,8 @@ namespace CSharp_Course.Game
     {
         public static void LaunchGame()
         {
-            var gameHandler = new GameHandler();
+            var weatherStation = new WeatherStation();
+            var gameHandler = new GameHandler(weatherStation);
 
             Console.WriteLine("The Arena begin, prepare to fight ! LifePoints : " + gameHandler.Player.LifePoints + "  Score : " + gameHandler.Player.Score);
 

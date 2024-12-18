@@ -1,6 +1,7 @@
 using CSharp_Course.Game;
 using Xunit;
 using FluentAssertions;
+using Moq;
 
 namespace CSharp_Course.GameTests
 {
@@ -10,8 +11,9 @@ namespace CSharp_Course.GameTests
         public void TestFight_PlayerWinBy5_WinResultPlayerScoreGet5PointsAndLifePointsStayMax()
         {
             // Arrange
-            // Initialize GameHandler
-            var gameHandler = new GameHandler();
+            // Initialize GameHandler and weather station
+            var weatherStation = Mock.Of<IWeatherStation>();
+            var gameHandler = new GameHandler(weatherStation);
 
             // Act
             // Start fight with a dice result of 6 for player and 1 for enemy
@@ -28,8 +30,9 @@ namespace CSharp_Course.GameTests
         public void TestFight_PlayerAndEnemyTie_TieResultPlayerScoreStay0AndLifePointsStayMax()
         {
             // Arrange
-            // Initialize GameHandler
-            var gameHandler = new GameHandler();
+            // Initialize GameHandler and weather station
+            var weatherStation = Mock.Of<IWeatherStation>();
+            var gameHandler = new GameHandler(weatherStation);
 
             // Act
             // Start fight with a dice result of 5 for player and enemy
@@ -46,8 +49,9 @@ namespace CSharp_Course.GameTests
         public void TestFight_PlayerLoseBy2_LoseResultPlayerScoreStay0AndLifePointsDecreaseBy2()
         {
             // Arrange
-            // Initialize GameHandler
-            var gameHandler = new GameHandler();
+            // Initialize GameHandler and weather station
+            var weatherStation = Mock.Of<IWeatherStation>();
+            var gameHandler = new GameHandler(weatherStation);
 
             // Act
             // Start fight with a dice result of 2 for player and 4 for enemy
@@ -65,8 +69,9 @@ namespace CSharp_Course.GameTests
         public void TestPlayerLoot_PlayerUseLifePotionAndTrickDice_PlayerLifeIncreaseBy2PlayerDiceBy1AndWinResult()
         {
             // Arrange
-            // Initialize GameHandler
-            var gameHandler = new GameHandler();
+            // Initialize GameHandler and weather station
+            var weatherStation = Mock.Of<IWeatherStation>();
+            var gameHandler = new GameHandler(weatherStation);
 
             // Act
             // Start fight with a dice result of 2 for player and 3 for enemy

@@ -11,11 +11,13 @@ namespace CSharp_Course.Game
     {
         public Player Player { get; }
         public LootManager LootManager { get; }
+        public IWeatherStation _weatherStation;
 
-        public GameHandler()
+        public GameHandler(IWeatherStation weatherStation)
         {
             Player = new Player(15);
             LootManager = new LootManager();
+            _weatherStation = weatherStation;
         }
 
         public void HandleGame()
@@ -42,6 +44,7 @@ namespace CSharp_Course.Game
 
         public Result HandleFight(int playerDice, int enemyDice)
         {
+            var weatherResult =_weatherStation.WhichWeather();
             Console.WriteLine("Fighters prepare to attack !");
             Console.WriteLine("Checking your inventory for bonus !");
             if (playerDice != 6)
@@ -62,8 +65,16 @@ namespace CSharp_Course.Game
             }
             else
             {
-                var loseGap = enemyDice - playerDice;
-                Player.LoseFight(loseGap);
+                if (weatherResult == Weather.Stormy)
+                {
+                    var loseGap = (enemyDice * 2) - playerDice;
+                    Player.LoseFight(loseGap);
+                }
+                else
+                {
+                    var loseGap = enemyDice - playerDice;
+                    Player.LoseFight(loseGap);
+                }
                 return Result.Lose;
             }
         }
