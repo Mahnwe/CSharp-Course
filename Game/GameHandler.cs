@@ -67,7 +67,8 @@ namespace CSharp_Course.Game
             {
                 if (weatherResult == Weather.Stormy)
                 {
-                    var loseGap = (enemyDice * 2) - playerDice;
+                    var loseGap = enemyDice - playerDice;
+                    loseGap *= 2;
                     Player.LoseFight(loseGap);
                 }
                 else

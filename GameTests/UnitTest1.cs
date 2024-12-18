@@ -13,6 +13,7 @@ namespace CSharp_Course.GameTests
             // Arrange
             // Initialize GameHandler and weather station
             var weatherStation = Mock.Of<IWeatherStation>();
+            Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Sunny);
             var gameHandler = new GameHandler(weatherStation);
 
             // Act
@@ -32,6 +33,7 @@ namespace CSharp_Course.GameTests
             // Arrange
             // Initialize GameHandler and weather station
             var weatherStation = Mock.Of<IWeatherStation>();
+            Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Rainy);
             var gameHandler = new GameHandler(weatherStation);
 
             // Act
@@ -51,6 +53,7 @@ namespace CSharp_Course.GameTests
             // Arrange
             // Initialize GameHandler and weather station
             var weatherStation = Mock.Of<IWeatherStation>();
+            Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Sunny);
             var gameHandler = new GameHandler(weatherStation);
 
             // Act
@@ -71,6 +74,7 @@ namespace CSharp_Course.GameTests
             // Arrange
             // Initialize GameHandler and weather station
             var weatherStation = Mock.Of<IWeatherStation>();
+            Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Sunny);
             var gameHandler = new GameHandler(weatherStation);
 
             // Act
@@ -83,6 +87,26 @@ namespace CSharp_Course.GameTests
             result.Should().Be(Result.Win);
             gameHandler.Player.Score.Should().Be(1);
             gameHandler.Player.LifePoints.Should().Be(17);
+        }
+
+        [Fact]
+        public void TestWeather_PlayerLoseBy2WithStormyWeather_LoseResultPlayerScoreStay0AndLifePointsDecreaseBy4()
+        {
+            // Arrange
+            // Initialize GameHandler and weather station
+            var weatherStation = Mock.Of<IWeatherStation>();
+            Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Stormy);
+            var gameHandler = new GameHandler(weatherStation);
+
+            // Act
+            // Start fight with a dice result of 2 for player and 4 for enemy
+            var result = gameHandler.HandleFight(2, 4);
+
+            // Assert
+            // Check that result is lose, score stay at 0 and player's life points decrease by 4 because of stormy weather
+            result.Should().Be(Result.Lose);
+            gameHandler.Player.Score.Should().Be(0);
+            gameHandler.Player.LifePoints.Should().Be(11);
         }
     }
 }
