@@ -118,5 +118,49 @@ namespace CSharp_Course.GameTests
             gameHandler.Player.Score.Should().Be(0);
             gameHandler.Player.LifePoints.Should().Be(11);
         }
+
+        [Fact]
+        public void TestMonsterType_PlayerTieWithStrongMonster_TieResultPlayerScoreStay0AndLifePointsStay15()
+        {
+            // Arrange
+            // Initialize GameHandler and weather station
+            var weatherStation = Mock.Of<IWeatherStation>();
+            Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Sunny);
+            var monsterType = Mock.Of<IMonsterFactory>();
+            Mock.Get(monsterType).Setup(m => m.WhichMonsterType()).Returns(MonsterType.Strong);
+            var gameHandler = new GameHandler(weatherStation, monsterType);
+
+            // Act
+            // Start fight with a dice result of 3 for player and 2 for enemy but tie result because enemy is strong
+            var result = gameHandler.HandleFight(3, 2);
+
+            // Assert
+            // Check that result is tie, score stay at 0 and player's life points stay at 15
+            result.Should().Be(Result.Tie);
+            gameHandler.Player.Score.Should().Be(0);
+            gameHandler.Player.LifePoints.Should().Be(15);
+        }
+
+        [Fact]
+        public void TestMonsterType_PlayerWinby2WithWeakMonster_WinResultPlayerScoreIncreaseby4AndLifePointsStay15()
+        {
+            // Arrange
+            // Initialize GameHandler and weather station
+            var weatherStation = Mock.Of<IWeatherStation>();
+            Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Sunny);
+            var monsterType = Mock.Of<IMonsterFactory>();
+            Mock.Get(monsterType).Setup(m => m.WhichMonsterType()).Returns(MonsterType.Weak);
+            var gameHandler = new GameHandler(weatherStation, monsterType);
+
+            // Act
+            // Start fight with a dice result of 4 for player and 2 for enemy but enemy is weak
+            var result = gameHandler.HandleFight(4, 2);
+
+            // Assert
+            // Check that result is win, score stay increase by 4 because enemy is weak and player's life points stay at 15
+            result.Should().Be(Result.Win);
+            gameHandler.Player.Score.Should().Be(4);
+            gameHandler.Player.LifePoints.Should().Be(15);
+        }
     }
 }
