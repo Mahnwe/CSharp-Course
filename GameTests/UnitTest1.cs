@@ -14,7 +14,9 @@ namespace CSharp_Course.GameTests
             // Initialize GameHandler and weather station
             var weatherStation = Mock.Of<IWeatherStation>();
             Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Sunny);
-            var gameHandler = new GameHandler(weatherStation);
+            var monsterType = Mock.Of<IMonsterFactory>();
+            Mock.Get(monsterType).Setup(m => m.WhichMonsterType()).Returns(MonsterType.Average);
+            var gameHandler = new GameHandler(weatherStation, monsterType);
 
             // Act
             // Start fight with a dice result of 6 for player and 1 for enemy
@@ -34,7 +36,9 @@ namespace CSharp_Course.GameTests
             // Initialize GameHandler and weather station
             var weatherStation = Mock.Of<IWeatherStation>();
             Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Rainy);
-            var gameHandler = new GameHandler(weatherStation);
+            var monsterType = Mock.Of<IMonsterFactory>();
+            Mock.Get(monsterType).Setup(m => m.WhichMonsterType()).Returns(MonsterType.Average);
+            var gameHandler = new GameHandler(weatherStation, monsterType);
 
             // Act
             // Start fight with a dice result of 5 for player and enemy
@@ -54,7 +58,9 @@ namespace CSharp_Course.GameTests
             // Initialize GameHandler and weather station
             var weatherStation = Mock.Of<IWeatherStation>();
             Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Sunny);
-            var gameHandler = new GameHandler(weatherStation);
+            var monsterType = Mock.Of<IMonsterFactory>();
+            Mock.Get(monsterType).Setup(m => m.WhichMonsterType()).Returns(MonsterType.Average);
+            var gameHandler = new GameHandler(weatherStation, monsterType);
 
             // Act
             // Start fight with a dice result of 2 for player and 4 for enemy
@@ -75,7 +81,9 @@ namespace CSharp_Course.GameTests
             // Initialize GameHandler and weather station
             var weatherStation = Mock.Of<IWeatherStation>();
             Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Sunny);
-            var gameHandler = new GameHandler(weatherStation);
+            var monsterType = Mock.Of<IMonsterFactory>();
+            Mock.Get(monsterType).Setup(m => m.WhichMonsterType()).Returns(MonsterType.Average);
+            var gameHandler = new GameHandler(weatherStation, monsterType);
 
             // Act
             // Start fight with a dice result of 2 for player and 3 for enemy
@@ -96,7 +104,9 @@ namespace CSharp_Course.GameTests
             // Initialize GameHandler and weather station
             var weatherStation = Mock.Of<IWeatherStation>();
             Mock.Get(weatherStation).Setup(m => m.WhichWeather()).Returns(Weather.Stormy);
-            var gameHandler = new GameHandler(weatherStation);
+            var monsterType = Mock.Of<IMonsterFactory>();
+            Mock.Get(monsterType).Setup(m => m.WhichMonsterType()).Returns(MonsterType.Average);
+            var gameHandler = new GameHandler(weatherStation, monsterType);
 
             // Act
             // Start fight with a dice result of 2 for player and 4 for enemy

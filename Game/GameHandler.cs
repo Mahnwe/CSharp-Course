@@ -12,15 +12,17 @@ namespace CSharp_Course.Game
         public Player Player { get; }
         public LootManager LootManager { get; }
         public IWeatherStation _weatherStation;
+        public IMonsterFactory _monsterFactory;
 
-        public GameHandler(IWeatherStation weatherStation)
+        public GameHandler(IWeatherStation weatherStation, IMonsterFactory monsterFactory)
         {
             Player = new Player(15);
             LootManager = new LootManager();
             _weatherStation = weatherStation;
+            _monsterFactory = monsterFactory;
         }
 
-        public void HandleGame()
+        public Result HandleGame()
         {
             var dice = new Dice();
             var result = HandleFight(dice.RollDice(), dice.RollDice());
@@ -39,20 +41,24 @@ namespace CSharp_Course.Game
                     HandleGame();
                     break;
             }
-
             Console.WriteLine("Next Fight ! LifePoints : " + Player.LifePoints + "  Score : " + Player.Score);
+            return result;
         }
 
         public Result HandleFight(int playerDice, int enemyDice)
         {
             var weatherResult =_weatherStation.WhichWeather();
+            var monsterType = _monsterFactory.WhichMonsterType();
             Console.WriteLine("Fighters prepare to attack !");
             Console.WriteLine("Checking your inventory for bonus !");
             if (playerDice != 6)
             { 
                  playerDice = LootManager.CheckPlayerLootDice(playerDice, Player); 
             }
-            
+            if(enemyDice != 6 && monsterType == MonsterType.Strong)
+            {
+                enemyDice += 1;
+            }
             Console.WriteLine("Your damage : " + playerDice + " Enemy damage : " + enemyDice);
             if (playerDice == enemyDice)
             {
@@ -60,9 +66,19 @@ namespace CSharp_Course.Game
             }
             if (WinFight(playerDice, enemyDice))
             {
-                var winGap = playerDice - enemyDice;
-                Player.WinFight(winGap);
-                return Result.Win;
+                if (monsterType == MonsterType.Weak)
+                {
+                    var winGap = playerDice - enemyDice;
+                    winGap *= 2;
+                    Player.WinFight(winGap);
+                    return Result.Win;
+                }
+                else
+                {
+                    var winGap = playerDice - enemyDice;
+                    Player.WinFight(winGap);
+                    return Result.Win;
+                }
             }
             else
             {
