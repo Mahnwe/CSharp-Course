@@ -36,6 +36,7 @@ namespace CSharp_Course.Game
                     break;
                 case Result.Tie:
                     Console.WriteLine("That's a tie ! Let's fight again !");
+                    HandleGame();
                     break;
             }
 
