@@ -23,9 +23,10 @@ namespace CSharp_Course.GameTests
             var result = gameHandler.HandleFight(6, 1);
 
             // Assert
-            // Check that player win, monster type is average, score increase by 5 and player's life points stay at 15
-            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Average);
+            // Check that player win, monster type is average, weather is sunny, score increase by 5 and player's life points stay at 15
             result.Should().Be(Result.Win);
+            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Average);
+            gameHandler._weatherStation.WhichWeather().Should().Be(Weather.Sunny);
             gameHandler.Player.Score.Should().Be(5);
             gameHandler.Player.LifePoints.Should().Be(15);
         }
@@ -46,9 +47,10 @@ namespace CSharp_Course.GameTests
             var result = gameHandler.HandleFight(5, 5);
 
             // Assert
-            // Check that result is tie, monster type is weak, score stay at 0 and player's life points stay at 15
-            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Weak);
+            // Check that result is tie, monster type is weak, weather is rainy, score stay at 0 and player's life points stay at 15
             result.Should().Be(Result.Tie);
+            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Weak);
+            gameHandler._weatherStation.WhichWeather().Should().Be(Weather.Rainy);
             gameHandler.Player.Score.Should().Be(0);
             gameHandler.Player.LifePoints.Should().Be(15);
         }
@@ -70,8 +72,9 @@ namespace CSharp_Course.GameTests
 
             // Assert
             // Check that result is lose, monster type is average, score stay at 0 and player's life points decrease by 2
-            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Average);
             result.Should().Be(Result.Lose);
+            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Average);
+            gameHandler._weatherStation.WhichWeather().Should().Be(Weather.Sunny);
             gameHandler.Player.Score.Should().Be(0);
             gameHandler.Player.LifePoints.Should().Be(13);
         }
@@ -95,8 +98,9 @@ namespace CSharp_Course.GameTests
 
             // Assert
             // Check that result is tie because of the trick dice, monster type is average, score stay at 0 and player's life points stay at 15
-            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Average);
             result.Should().Be(Result.Win);
+            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Average);
+            gameHandler._weatherStation.WhichWeather().Should().Be(Weather.Sunny);
             gameHandler.Player.Score.Should().Be(1);
             gameHandler.Player.LifePoints.Should().Be(17);
         }
@@ -117,9 +121,10 @@ namespace CSharp_Course.GameTests
             var result = gameHandler.HandleFight(2, 4);
 
             // Assert
-            // Check that result is lose, monster type is average, score stay at 0 and player's life points decrease by 4 because of stormy weather
-            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Average);
+            // Check that result is lose, monster type is average, weather is stormy, score stay at 0 and player's life points decrease by 4 because of stormy weather
             result.Should().Be(Result.Lose);
+            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Average);
+            gameHandler._weatherStation.WhichWeather().Should().Be(Weather.Stormy);
             gameHandler.Player.Score.Should().Be(0);
             gameHandler.Player.LifePoints.Should().Be(11);
         }
@@ -141,8 +146,9 @@ namespace CSharp_Course.GameTests
 
             // Assert
             // Check that result is tie, monster type is strong, score stay at 0 and player's life points stay at 15
-            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Strong);
             result.Should().Be(Result.Tie);
+            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Strong);
+            gameHandler._weatherStation.WhichWeather().Should().Be(Weather.Sunny);
             gameHandler.Player.Score.Should().Be(0);
             gameHandler.Player.LifePoints.Should().Be(15);
         }
@@ -164,8 +170,9 @@ namespace CSharp_Course.GameTests
 
             // Assert
             // Check that result is win, monster type is weak, score increase by 4 because enemy is weak and player's life points stay at 15
-            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Weak);
             result.Should().Be(Result.Win);
+            gameHandler._monsterFactory.WhichMonsterType().Should().Be(MonsterType.Weak);
+            gameHandler._weatherStation.WhichWeather().Should().Be(Weather.Sunny);
             gameHandler.Player.Score.Should().Be(4);
             gameHandler.Player.LifePoints.Should().Be(15);
         }
