@@ -11,6 +11,7 @@ namespace CSharp_Course.Game
     {
         public static void LaunchGame()
         {
+            var dice = new Dice();
             Result fightResult;
             var fightWonNumber = 0;
             var weatherStation = new WeatherStation();
@@ -21,7 +22,7 @@ namespace CSharp_Course.Game
 
             while(gameHandler.Player.LifePoints > 0)
             {
-                fightResult = gameHandler.HandleGame();
+                fightResult = gameHandler.HandleGame(dice.RollDice(), dice.RollDice(), dice.RollDice());
                 if(fightResult == Result.Win)
                 {
                     fightWonNumber++;

@@ -23,9 +23,9 @@ namespace CSharp_Course.Game
             ManagerLootList.Add(new Loot("Life potion", 0, 2));
             ManagerLootList.Add(new Loot("Trick dice", 1, 0));
         }
-        public void LaunchRandomLoot(List<Loot> playerList)
+        public void LaunchRandomLoot(List<Loot> playerList, int lootDice)
         {
-            var LootResult = dice.RollDice();
+            var LootResult = lootDice;
             switch(LootResult)
             {
                 case 6:

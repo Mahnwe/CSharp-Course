@@ -22,15 +22,15 @@ namespace CSharp_Course.Game
             _monsterFactory = monsterFactory;
         }
 
-        public Result HandleGame()
+        public Result HandleGame(int lootDice, int playerDice, int ennemyDice)
         {
             var dice = new Dice();
-            var result = HandleFight(dice.RollDice(), dice.RollDice());
+            var result = HandleFight(playerDice, ennemyDice);
             switch (result)
             {
                 case Result.Win:
                     Console.WriteLine("You win !");
-                    LootManager.LaunchRandomLoot(Player.LootList);
+                    LootManager.LaunchRandomLoot(Player.LootList, lootDice);
                     LootManager.CheckPlayerLootLife(Player);
                     break;
                 case Result.Lose:
@@ -38,7 +38,7 @@ namespace CSharp_Course.Game
                     break;
                 case Result.Tie:
                     Console.WriteLine("That's a tie ! Let's fight again !");
-                    HandleGame();
+                    HandleGame(dice.RollDice(), dice.RollDice(), dice.RollDice());
                     break;
             }
             Console.WriteLine("Next Fight ! LifePoints : " + Player.LifePoints + "  Score : " + Player.Score);
@@ -102,14 +102,14 @@ namespace CSharp_Course.Game
             return dice1 > dice2;
         }
 
-        public Result HandleTestGame(int playerDice, int enemyDice)
+        public Result HandleTestGame(int lootDice, int playerDice, int enemyDice)
         {
             var result = HandleFight(playerDice, enemyDice);
             switch (result)
             {
                 case Result.Win:
                     Console.WriteLine("You win !");
-                    LootManager.LaunchRandomLoot(Player.LootList);
+                    LootManager.LaunchRandomLoot(Player.LootList, lootDice);
                     LootManager.CheckPlayerLootLife(Player);
                     break;
                 case Result.Lose:
